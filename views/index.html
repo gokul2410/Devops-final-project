@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Reminder App</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<h1>📝 My Sticky Reminders</h1>
+
+<form action="/add" method="POST">
+  <input type="text" name="reminder" placeholder="Enter reminder..." required>
+  <button>Add</button>
+</form>
+
+<ul id="list"></ul>
+
+<script>
+fetch('/list')
+.then(res => res.json())
+.then(data => {
+  const list = document.getElementById('list');
+  data.forEach((item, index) => {
+    const li = document.createElement('li');
+    li.innerHTML = `${item} <a href="/delete/${index}">❌</a>`;
+    list.appendChild(li);
+  });
+});
+
